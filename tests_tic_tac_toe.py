@@ -1,8 +1,12 @@
+'''TicTacToe game tests'''
+
 import unittest
 from tic_tac_toe import TicTacToe
 
 class TestTicTacToe(unittest.TestCase, TicTacToe):
+    '''Unittesting game class'''
     def test_change_cell(self):
+        """Trying to break changing precautions"""
         self.assertFalse(self.change_cell(0, 0, 'X'))
         self.assertFalse(self.change_cell(-1, -2, 'X'))
         self.assertFalse(self.change_cell(110, 10, 'X'))
@@ -19,6 +23,7 @@ class TestTicTacToe(unittest.TestCase, TicTacToe):
         self.assertFalse(self.change_cell(1, 1, 'X'))
 
     def test_winner_check(self):
+        """Testing win check by implementing four possible cases"""
         instance = TicTacToe()
         instance.change_cell(1, 1, 'X')
         instance.change_cell(1, 2, 'X')
@@ -42,11 +47,6 @@ class TestTicTacToe(unittest.TestCase, TicTacToe):
         instance.change_cell(2, 2, 'X')
         instance.change_cell(3, 3, 'X')
         self.assertFalse(self.check_if_there_is_a_winner())
-
-
-        
-
-
 
 
 if __name__ == '__main__':
