@@ -51,19 +51,17 @@ class TicTacToe():
         print("{}: X ".format(player1))
         print("{}: O ".format(player2))
         print("To place a figure - type row and column number separated by space")
+
         cur_player = 0
+
         while not self.check_if_there_is_a_winner():
             cur_player = 0 if bool(cur_player) else 1
             print("{}`s turn".format(player1 if bool(cur_player) else player2))
             self.print_field()
             tmp_inp = [int(s) for s in input().split(' ')]
+
             while not self.change_cell(tmp_inp[0], tmp_inp[1], 'X' if cur_player == 1 else 'O'):
                 print("Invalid input, try again")
                 tmp_inp = [int(s) for s in input().split(' ')]
+
         print("Congratulations to {}! You won!".format(player1 if bool(cur_player) else player2))
-
-
-
-GAME = TicTacToe()
-
-GAME.play("Leha", "Alex")
