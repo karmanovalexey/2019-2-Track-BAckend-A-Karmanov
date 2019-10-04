@@ -6,41 +6,64 @@ FIGURE = {
     'Circle' : 'O'
 }
 
-class Field():
-    '''A functional tic-tac-toe game class. Game can be started by calling for a play(...) method'''
-    current_state = [FIGURE['Space']] * 9
+DEFAULT_FIELD_OUTLOOK = '''
+{a[0]}|{a[1]}|{a[2]}
+- - -
+{a[3]}|{a[4]}|{a[5]}
+- - -
+{a[6]}|{a[7]}|{a[8]}\n'''
+
+class TicTacToe():
+    '''A functional tic-tac-toe game class. Game can be started by calling a play(...) method'''
+    field = [FIGURE['Space']] * 9
     first_player = True
     def print_field(self):
         '''ASCII printing classical 3x3 tic-tac-toe field'''
-        result = "{a[0]}|{a[1]}|{a[2]}\n- - -\n{a[3]}|{a[4]}|{a[5]}\n- - -\n{a[6]}|{a[7]}|{a[8]}".format(a = self.current_state)
+        result = DEFAULT_FIELD_OUTLOOK.format(a=self.field)
         print(result)
-#        result = '''    {a[0]}|{a[1]}|{a[2]} \n 
-#                        - - -\n 
-#                    {a[3]}|{a[4]}|{a[5]}\n
-#                         - - -\n 
-#                    {a[6]}|{a[7]}|{a[8]}\n'''.format(a=self.current_state)
-#        print(result[1:11], result[36:42], result[63:70], result[95:103], result[124:130])
 
     def change_cell(self, row, col, val):
         '''Validating input(row column value) and modifying field'''
-        if val in ('X', 'O') and 0 < row < 4 and 0 < col < 4 :
-            if self.current_state[(row - 1) * 3 + (col - 1)] == ' ':
-                self.current_state[(row - 1) * 3 + (col - 1)] = val
-                return "Cell filled successfully"
-            return "Cell is already filled"
-        return "Invalid input"
+        if val in ('X', 'O') and 0 < row < 4 and 0 < col < 4:
+            if self.field[(row - 1) * 3 + (col - 1)] == ' ':
+                self.field[(row - 1) * 3 + (col - 1)] = val
+                return True
+            return False
+        return False
 
     def check_if_there_is_a_winner(self):
-        '''Searching for a sequence of equal cells in up-down case, left-right case and cross case'''
-        if (self.current_state[0] == self.current_state[1] == self.current_state[2] != ' ' or
-            self.current_state[3] == self.current_state[4] == self.current_state[5] != ' ' or
-            self.current_state[6] == self.current_state[7] == self.current_state[8] != ' '):
-            return True 
-        if (self.current_state[0] == self.current_state[3] == self.current_state[6] != ' ' or
-            self.current_state[1] == self.current_state[4] == self.current_state[7] != ' ' or
-            self.current_state[2] == self.current_state[5] == self.current_state[8] != ' '):
+        '''Searching for a sequence of equal cells in up-down, left-right and cross cases'''
+        if (self.field[0] == self.field[1] == self.field[2] != ' ' or
+                self.field[3] == self.field[4] == self.field[5] != ' ' or
+                self.field[6] == self.field[7] == self.field[8] != ' '):
             return True
-        if (self.current_state[0] == self.current_state[4] == self.current_state[8] != ' ' or
-            self.current_state[2] == self.current_state[4] == self.current_state[6] != ' '):
+        if (self.field[0] == self.field[3] == self.field[6] != ' ' or
+                self.field[1] == self.field[4] == self.field[7] != ' ' or
+                self.field[2] == self.field[5] == self.field[8] != ' '):
+            return True
+        if (self.field[0] == self.field[4] == self.field[8] != ' ' or
+                self.field[2] == self.field[4] == self.field[6] != ' '):
             return True
         return False
+
+    def play(self, player1, player2):
+        '''Launching a game loop, waiting for a winner to win)'''
+        print("{}: X ".format(player1))
+        print("{}: O ".format(player2))
+        print("To place a figure - type row and column number separated by space")
+        cur_player = 0
+        while not self.check_if_there_is_a_winner():
+            cur_player = 0 if bool(cur_player) else 1
+            print("{}`s turn".format(player1 if bool(cur_player) else player2))
+            self.print_field()
+            tmp_inp = [int(s) for s in input().split(' ')]
+            while not self.change_cell(tmp_inp[0], tmp_inp[1], 'X' if cur_player == 1 else 'O'):
+                print("Invalid input, try again")
+                tmp_inp = [int(s) for s in input().split(' ')]
+        print("Congratulations to {}! You won!".format(player1 if bool(cur_player) else player2))
+
+
+
+GAME = TicTacToe()
+
+GAME.play("Leha", "Alex")
