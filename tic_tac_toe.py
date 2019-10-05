@@ -16,7 +16,9 @@ DEFAULT_FIELD_OUTLOOK = '''
 class TicTacToe():
     '''A functional tic-tac-toe game class. Game can be started by calling a play(...) method'''
     field = [FIGURE['Space']] * 9
-    first_player = True
+    def __init__(self):
+        '''Creating an empty field'''
+        self.field = [FIGURE['Space']] * 9
     def print_field(self):
         '''ASCII printing classical 3x3 tic-tac-toe field'''
         result = DEFAULT_FIELD_OUTLOOK.format(a=self.field)

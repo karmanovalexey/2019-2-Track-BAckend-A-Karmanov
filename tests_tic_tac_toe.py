@@ -18,15 +18,34 @@ class TestTicTacToe(unittest.TestCase, TicTacToe):
 
         instance = TicTacToe()
         instance.change_cell(1, 1, 'X')
-        self.assertFalse(self.change_cell(1, 1, 'X'))
+        self.assertFalse(instance.change_cell(1, 1, 'X'))
 
     def test_winner_check(self):
-        """Testing win check by implementing possible case"""
+        """Testing win check by implementing possible cases"""
         instance = TicTacToe()
         instance.change_cell(1, 1, 'X')
         instance.change_cell(1, 2, 'X')
         instance.change_cell(1, 3, 'X')
-        self.assertTrue(self.check_if_there_is_a_winner())
+        self.assertTrue(instance.check_if_there_is_a_winner())
+        instance = TicTacToe()
+        instance.change_cell(1, 1, 'X')
+        instance.change_cell(2, 2, 'X')
+        instance.change_cell(3, 3, 'X')
+        self.assertTrue(instance.check_if_there_is_a_winner())
+        instance = TicTacToe()
+        instance.change_cell(1, 1, 'X')
+        instance.change_cell(2, 1, 'X')
+        instance.change_cell(3, 1, 'X')
+        self.assertTrue(instance.check_if_there_is_a_winner())
+        instance = TicTacToe()
+        instance.change_cell(1, 1, 'X')
+        instance.change_cell(2, 2, 'O')
+        instance.change_cell(3, 3, 'X')
+        self.assertFalse(instance.check_if_there_is_a_winner())
+        instance = TicTacToe()
+        instance.change_cell(1, 1, 'X')
+        instance.change_cell(3, 3, 'X')
+        self.assertFalse(instance.check_if_there_is_a_winner())
 
 if __name__ == '__main__':
     unittest.main()
