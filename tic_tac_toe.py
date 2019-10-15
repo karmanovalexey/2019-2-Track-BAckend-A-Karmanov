@@ -1,11 +1,5 @@
 ''' Includes tic-tac-toe game class '''
 
-FIGURE = {
-    'Space' : ' ',
-    'Cross' : 'X',
-    'Circle' : 'O'
-}
-
 DEFAULT_FIELD_OUTLOOK = '''
 {a[0]}|{a[1]}|{a[2]}
 - - -
@@ -15,10 +9,10 @@ DEFAULT_FIELD_OUTLOOK = '''
 
 class TicTacToe():
     '''A functional tic-tac-toe game class. Game can be started by calling a play(...) method'''
-    field = [FIGURE['Space']] * 9
+    field = [' '] * 9
     def __init__(self):
         '''Creating an empty field'''
-        self.field = [FIGURE['Space']] * 9
+        self.field = [' '] * 9
     def print_field(self):
         '''ASCII printing classical 3x3 tic-tac-toe field'''
         result = DEFAULT_FIELD_OUTLOOK.format(a=self.field)
@@ -60,10 +54,23 @@ class TicTacToe():
             cur_player = 0 if bool(cur_player) else 1
             print("{}`s turn".format(player1 if bool(cur_player) else player2))
             self.print_field()
+
             tmp_inp = [int(s) for s in input().split(' ')]
+            if len(tmp_inp) != 2:
+                tmp_inp = [0, 0]
 
             while not self.change_cell(tmp_inp[0], tmp_inp[1], 'X' if cur_player == 1 else 'O'):
                 print("Invalid input, try again")
                 tmp_inp = [int(s) for s in input().split(' ')]
+                if len(tmp_inp) != 2:
+                    tmp_inp = [0, 0]
 
-        print("Congratulations to {}! You won!".format(player1 if bool(cur_player) else player2))
+            if ' ' not in self.field:
+                print('It`s a draw')
+                break
+        else:
+            print("{} won!".format(player1 if bool(cur_player) else player2))
+
+if __name__ == '__main__':
+    GAME = TicTacToe()
+    GAME.play('Player 1', 'Player 2')
