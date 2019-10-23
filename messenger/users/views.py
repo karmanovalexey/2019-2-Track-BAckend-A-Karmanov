@@ -2,9 +2,9 @@ from django.shortcuts import render
 from django.http import JsonResponse 
 # Create your views here.
 
-userContacts = {'placeholder': 'placeholder'}
+userContacts = {'user1': 'user2'}
 
-user = {'placeholder': user_contacts}
+user = {'users': userContacts}
 
 def user_profile(request):
   if request.method == 'GET':
@@ -13,5 +13,5 @@ def user_profile(request):
 
 def user_contacts(request):
   if request.method == 'GET':
-    return JsonResponse(user_contacts)
+    return JsonResponse(userContacts)
   return '400 Bad Request'

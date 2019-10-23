@@ -2,9 +2,9 @@ from django.shortcuts import render
 from django.http import JsonResponse 
 # Create your views here.
 
-chat1 = {'placeholder': 'placeholder'}
+chat1 = {'user1': 'chat'}
 
-chats = {'placeholder': chat1}
+chats = {'chats': chat1}
 
 def chat_list(request):
   if request.method == 'GET':
