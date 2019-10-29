@@ -1,3 +1,6 @@
 from django.db import models
 
-# Create your models here.
+class User(models.Model):
+  name = models.CharField(max_length=50, null=False)
+  nick = models.CharField(max_length=30, null=False)
+  avatar = models.CharField(max_length=100, null=False)
