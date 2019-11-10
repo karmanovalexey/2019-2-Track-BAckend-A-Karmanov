@@ -1,17 +1,27 @@
 from django.shortcuts import render
-from django.http import JsonResponse 
-# Create your views here.
+from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
+from django.http import JsonResponse, HttpResponseNotAllowed
+from .models import User
 
 userContacts = {'user1': 'user2'}
 
-user = {'users': userContacts}
+placeholder = {'users': userContacts}
 
 def user_profile(request):
-  if request.method == 'GET':
-    return JsonResponse(user)
-  return '400 Bad Request'
+    if request.method == 'GET':
+        return JsonResponse(placeholder)
+    return HttpResponseNotAllowed(['GET'])
+
+def get_user(nickname):
+    try:
+        user = User.objects.filter(username=nickname)
+    except ObjectDoesNotExist:
+        user = None
+    except MultipleObjectsReturned:
+        user = User.objects.filter(username=nickname).first
+    return user
 
 def user_contacts(request):
   if request.method == 'GET':
     return JsonResponse(userContacts)
-  return '400 Bad Request'
+  return HttpResponseNotAllowed(['GET'])

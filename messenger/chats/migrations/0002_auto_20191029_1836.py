@@ -6,12 +6,12 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    dependencies = [
+    dependencies=[
         ('users', '0001_initial'),
         ('chats', '0001_initial'),
     ]
 
-    operations = [
+    operations=[
         migrations.RenameField(
             model_name='chat',
             old_name='title',
